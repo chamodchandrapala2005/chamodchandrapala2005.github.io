@@ -5,6 +5,27 @@
 'use strict';
 
 // ============================================================
+//  THEME TOGGLE
+// ============================================================
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('theme');
+
+if (currentTheme) {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+}
+
+themeToggle.addEventListener('click', () => {
+  let theme = document.documentElement.getAttribute('data-theme');
+  if (theme === 'light') {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+  }
+});
+
+// ============================================================
 //  NAV: Sticky style on scroll
 // ============================================================
 const navbar = document.getElementById('navbar');
@@ -21,9 +42,9 @@ updateNav();
 // ============================================================
 //  NAV: Mobile hamburger toggle
 // ============================================================
-const hamburger   = document.getElementById('hamburger');
-const navLinks    = document.getElementById('navLinks');
-const navOverlay  = document.getElementById('navOverlay');
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+const navOverlay = document.getElementById('navOverlay');
 
 function openNav() {
   navLinks.classList.add('open');
@@ -66,9 +87,9 @@ function highlightNav() {
   const scrollPos = window.scrollY + 100;
 
   sections.forEach(section => {
-    const top    = section.offsetTop;
+    const top = section.offsetTop;
     const bottom = top + section.offsetHeight;
-    const id     = section.getAttribute('id');
+    const id = section.getAttribute('id');
 
     if (scrollPos >= top && scrollPos < bottom) {
       navLinkEls.forEach(link => {
@@ -85,7 +106,7 @@ highlightNav();
 //  SMOOTH SCROLL for anchor links
 // ============================================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+  anchor.addEventListener('click', function (e) {
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       e.preventDefault();
@@ -118,7 +139,7 @@ document.querySelectorAll('[data-animate]').forEach(el => {
 // ============================================================
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
-const submitBtn   = document.getElementById('submitBtn');
+const submitBtn = document.getElementById('submitBtn');
 
 if (contactForm) {
   // Real-time clearing of errors on input
@@ -131,15 +152,15 @@ if (contactForm) {
     });
   });
 
-  contactForm.addEventListener('submit', function(e) {
+  contactForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const nameEl    = document.getElementById('contactName');
-    const emailEl   = document.getElementById('contactEmail');
+    const nameEl = document.getElementById('contactName');
+    const emailEl = document.getElementById('contactEmail');
     const messageEl = document.getElementById('contactMessage');
 
-    const nameValid    = validateField(nameEl);
-    const emailValid   = validateField(emailEl);
+    const nameValid = validateField(nameEl);
+    const emailValid = validateField(emailEl);
     const messageValid = validateField(messageEl);
 
     if (nameValid && emailValid && messageValid) {
@@ -170,9 +191,9 @@ if (contactForm) {
 }
 
 function validateField(input) {
-  const id    = input.id;
+  const id = input.id;
   const value = input.value.trim();
-  let   isValid = true;
+  let isValid = true;
 
   if (id === 'contactName') {
     if (!value) {
@@ -226,7 +247,7 @@ function showError(input, errorId, message) {
 function clearError(input) {
   input.classList.remove('error');
   // Find the associated error span
-  const group  = input.closest('.form-group');
+  const group = input.closest('.form-group');
   if (group) {
     const errEl = group.querySelector('.form-error');
     if (errEl) {
